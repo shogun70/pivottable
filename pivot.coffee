@@ -364,7 +364,10 @@ callWithJQuery ($) ->
                 agg = @rowTotals[flatRowKey]
             else
                 agg = @tree[flatRowKey][flatColKey]
-            return agg ? {value: (-> null), format: -> ""}
+            return agg ? {
+                    value: -> null
+                    format: -> ""
+                }
 
     #expose these to the outside world
     $.pivotUtilities = {aggregatorTemplates, aggregators, renderers, derivers, locales,
@@ -594,7 +597,7 @@ callWithJQuery ($) ->
             #cache the input in some useful form
             input = PivotData.convertToArray(input)
             tblCols = (k for own k of input[0])
-            tblCols.push c for own c of opts.derivedAttributes when (c not in tblCols)
+            tblCols.push c for own c of opts.derivedAttributes when not (c in tblCols)
 
             #figure out the cardinality and some stats
             axisValues = {}
